@@ -32,6 +32,7 @@ router.get(
         if (data.ids?.length) followsJulien = data?.ids?.includes(JULIENS_ID);
 
         var user = {
+          id: req.federatedUser.id,
           username: req.federatedUser.username,
           displayName: req.federatedUser.displayName,
           following: followsJulien,

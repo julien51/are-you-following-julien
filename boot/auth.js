@@ -1,8 +1,6 @@
 var passport = require("passport");
 var Strategy = require("passport-twitter");
 
-const JULIENS_ID = 5381582;
-
 module.exports = function () {
   /*
   var trustProxy = false;
@@ -24,7 +22,8 @@ module.exports = function () {
       {
         consumerKey: process.env["TWITTER_CONSUMER_KEY"],
         consumerSecret: process.env["TWITTER_CONSUMER_SECRET"],
-        callbackURL: "/oauth/callback/twitter.com",
+        callbackURL:
+          "https://are-you-following-julien.onrender.com/oauth/callback/twitter.com",
         //proxy: trustProxy
       },
       function (token, tokenSecret, profile, cb) {
