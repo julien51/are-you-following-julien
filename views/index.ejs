@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="/stylesheets/pico.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Are you following Julien?</title>
+
+    <style>
+      /* Global CSS variables */
+      :root {
+        --spacing: 3rem;
+        --text-weight: 400;
+        --titles-weight: 800;
+        --block-round: 0;
+      }
+
+      /* Typography */
+      h2,
+      h3,
+      hgroup > :last-child {
+        font-weight: 200;
+      }
+      small {
+        color: var(--muted-text);
+      }
+
+      /* Header */
+
+      :root:not([data-theme="dark"]),
+      [data-theme="light"] {
+        --nav-background: rgba(255, 255, 255, 0.7);
+        --nav-border: rgba(115, 130, 140, 0.2);
+      }
+
+      [data-theme="dark"] {
+        --nav-background: rgba(16, 24, 30, 0.8);
+        --nav-border: rgba(115, 130, 140, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main
+      class="container"
+      style="display: flex; height: 100vh; align-items: center"
+    >
+      <a
+        style="margin: 0 auto"
+        href="/login/federated/twitter.com"
+        role="button"
+        >Sign in with Twitter</a
+      >
+    </main>
+  </body>
+</html>
