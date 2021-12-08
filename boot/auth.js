@@ -34,28 +34,11 @@ module.exports = function () {
         // allows for account linking and authentication with other identity
         // providers.
 
-        var Twit = require("twit");
-
-        var T = new Twit({
-          consumer_key: process.env["TWITTER_CONSUMER_KEY"], //get this from developer.twitter.com where your app info is
-          consumer_secret: process.env["TWITTER_CONSUMER_SECRET"], //get this from developer.twitter.com where your app info is
-          access_token: token,
-          access_token_secret: tokenSecret,
-          timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
-          strictSSL: true, // optional - requires SSL certificates to be valid.
+        return cb(null, {
+          ...profile,
+          token,
+          tokenSecret,
         });
-
-        T.get(
-          "followers/ids",
-          { screen_name: profile.screen_name },
-          function (err, data, response) {
-            var followsJulien = data.ids.includes(JULIENS_ID);
-            return cb(null, {
-              ...profile,
-              follows_julien: followsJulien,
-            });
-          }
-        );
       }
     )
   );

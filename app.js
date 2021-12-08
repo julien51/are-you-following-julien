@@ -11,7 +11,6 @@ var authRouter = require("./routes/auth");
 
 var app = express();
 
-require("./boot/db")();
 require("./boot/auth")();
 
 // Configure view engine to render EJS templates.

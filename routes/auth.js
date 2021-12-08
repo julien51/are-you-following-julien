@@ -1,8 +1,8 @@
 var express = require("express");
 var passport = require("passport");
-var db = require("../db");
 
 var router = express.Router();
+const JULIENS_ID = 5381582;
 
 router.get("/login/federated/twitter.com", passport.authenticate("twitter"));
 
@@ -13,70 +13,36 @@ router.get(
     failureRedirect: "/",
   }),
   function (req, res, next) {
-    db.get(
-      "SELECT * FROM federated_credentials WHERE provider = ? AND subject = ?",
-      ["https://twitter.com", req.federatedUser.id],
-      function (err, row) {
-        if (err) {
-          return next(err);
-        }
-        if (!row) {
-          db.run(
-            "INSERT INTO users (name, following) VALUES (?, ?)",
-            [req.federatedUser.displayName, req.federatedUser.follows_julien],
-            function (err) {
-              if (err) {
-                return next(err);
-              }
+    var Twit = require("twit");
 
-              var id = this.lastID;
-              db.run(
-                "INSERT INTO federated_credentials (provider, subject, user_id) VALUES (?, ?, ?)",
-                ["https://twitter.com", req.federatedUser.id, id],
-                function (err) {
-                  if (err) {
-                    return next(err);
-                  }
-                  var user = {
-                    id: id.toString(),
-                    displayName: req.federatedUser.displayName,
-                  };
-                  req.login(user, function (err) {
-                    if (err) {
-                      return next(err);
-                    }
-                    res.redirect("/");
-                  });
-                }
-              );
-            }
-          );
-        } else {
-          db.get(
-            "SELECT rowid AS id, username, name, following FROM users WHERE rowid = ?",
-            [row.user_id],
-            function (err, row) {
-              if (err) {
-                return next(err);
-              }
+    var T = new Twit({
+      consumer_key: process.env["TWITTER_CONSUMER_KEY"], //get this from developer.twitter.com where your app info is
+      consumer_secret: process.env["TWITTER_CONSUMER_SECRET"], //get this from developer.twitter.com where your app info is
+      access_token: req.federatedUser.token,
+      access_token_secret: req.federatedUser.tokenSecret,
+      timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+      strictSSL: true, // optional - requires SSL certificates to be valid.
+    });
 
-              // TODO: Handle undefined row.
-              var user = {
-                id: row.id.toString(),
-                username: row.username,
-                displayName: row.name,
-                following: row.following,
-              };
-              console.log(user);
-              req.login(user, function (err) {
-                if (err) {
-                  return next(err);
-                }
-                res.redirect("/");
-              });
-            }
-          );
-        }
+    T.get(
+      "followers/ids",
+      { screen_name: req.federatedUser.username },
+      function (err, data, response) {
+        var followsJulien = false;
+        if (data.ids?.length) followsJulien = data?.ids?.includes(JULIENS_ID);
+
+        var user = {
+          username: req.federatedUser.username,
+          displayName: req.federatedUser.displayName,
+          following: followsJulien,
+        };
+
+        req.login(user, function (err) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/");
+        });
       }
     );
   }
