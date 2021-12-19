@@ -2,6 +2,11 @@ var passport = require("passport");
 var Strategy = require("passport-twitter");
 
 module.exports = function () {
+  console.log(process.env)
+  let baseUrl = 'http://localhost:3000/'
+  if (process.env.NODE_ENV === 'production') {
+    baseUrl = "https://claim-ouvre-boite-membership.herokuapp.com/"
+  }
   /*
   var trustProxy = false;
   if (process.env.DYNO) {
@@ -23,7 +28,7 @@ module.exports = function () {
         consumerKey: process.env["TWITTER_CONSUMER_KEY"],
         consumerSecret: process.env["TWITTER_CONSUMER_SECRET"],
         callbackURL:
-          "http://localhost:3000/oauth/callback/twitter.com",
+          `${baseUrl}oauth/callback/twitter.com`,
         //proxy: trustProxy
       },
       function (token, tokenSecret, profile, cb) {
