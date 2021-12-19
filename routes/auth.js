@@ -1,11 +1,15 @@
 var express = require("express");
 var passport = require("passport");
+var Twit = require("twit");
+var JULIENS_ID = require('../constants').JULIENS_ID
+
 
 var router = express.Router();
-const JULIENS_ID = 5381582;
 
+// Twitter auth route!
 router.get("/login/federated/twitter.com", passport.authenticate("twitter"));
 
+// When
 router.get(
   "/oauth/callback/twitter.com",
   passport.authenticate("twitter", {
@@ -13,8 +17,6 @@ router.get(
     failureRedirect: "/",
   }),
   function (req, res, next) {
-    var Twit = require("twit");
-
     var T = new Twit({
       consumer_key: process.env["TWITTER_CONSUMER_KEY"], //get this from developer.twitter.com where your app info is
       consumer_secret: process.env["TWITTER_CONSUMER_SECRET"], //get this from developer.twitter.com where your app info is
@@ -24,18 +26,17 @@ router.get(
       strictSSL: true, // optional - requires SSL certificates to be valid.
     });
 
+    // We need the list of people that this current user follows
     T.get(
-      "followers/ids",
+      "friends/ids",
       { screen_name: req.federatedUser.username },
       function (err, data, response) {
-        var followsJulien = false;
-        if (data.ids?.length) followsJulien = data?.ids?.includes(JULIENS_ID);
 
         var user = {
           id: req.federatedUser.id,
           username: req.federatedUser.username,
           displayName: req.federatedUser.displayName,
-          following: followsJulien,
+          following: data?.ids?.includes(JULIENS_ID),
         };
 
         req.login(user, function (err) {
@@ -49,6 +50,7 @@ router.get(
   }
 );
 
+// LOG OUT!
 router.get("/logout", function (req, res, next) {
   req.logout();
   res.redirect("/");

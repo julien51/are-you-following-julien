@@ -1,0 +1,11 @@
+<%- include('./partials/header.ejs'); %>
+  <%- include('./partials/layout.ejs'); %>
+
+    <h1>You are already a member 🙏</h1>
+    <p style="margin: 0 auto">It looks like you already have a membership to <a
+        href="https://ouvre-boite.com/">Ouvre-Boite</a>! It is valid until
+      <%= expiration - new Date()> 60*60*24*1000 ?
+        expiration.toLocaleDateString() : expiration.toLocaleTimeString() %>.
+    </p>
+
+    <%- include('./partials/footer.ejs'); %>

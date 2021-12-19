@@ -1,62 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
-    />
-    <link rel="stylesheet" href="/stylesheets/pico.css" />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title>Are you following Julien?</title>
-    <style>
-      :root:not([data-theme="dark"]),
-      [data-theme="light"] {
-        --nav-background: rgba(255, 255, 255, 0.7);
-        --nav-border: rgba(115, 130, 140, 0.2);
-      }
+<%- include('./partials/header.ejs'); %>
+  <%- include('./partials/layout.ejs'); %>
 
-      [data-theme="dark"] {
-        --nav-background: rgba(16, 24, 30, 0.8);
-        --nav-border: rgba(115, 130, 140, 0.2);
-      }
+    <h1>You are elligible! 🎉</h1>
+    <p>It looks like you follow Julien. Please, connect your wallet so we can airdrop a membership.</p>
+    <a style="margin: 0 auto" role="button"
+      href="https://app.unlock-protocol.com/checkout?client_id=localhost:3000&redirect_uri=http://localhost:3000/wallet-connected">Connect
+      your wallet</a>
 
-      main .grid > * {
-        margin-bottom: var(--spacing);
-      }
-      @media (min-width: 992px) {
-        main .grid {
-          grid-column-gap: var(--spacing);
-          grid-template-columns: 25% auto;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div
-      class="container"
-      style="
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <h3><%= user.displayName %></h3>
-
-      <% if (user.following) { %>
-      <h4>Is following Julien</h4>
-      <img
-        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/red-heart_2764-fe0f.png"
-      />
-      <% } else { %>
-      <h4>Is not following Julien</h4>
-      <img
-        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/broken-heart_1f494.png"
-      />
-      <% } %>
-    </div>
-  </body>
-</html>
+    <%- include('./partials/footer.ejs'); %>

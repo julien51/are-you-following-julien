@@ -23,7 +23,7 @@ module.exports = function () {
         consumerKey: process.env["TWITTER_CONSUMER_KEY"],
         consumerSecret: process.env["TWITTER_CONSUMER_SECRET"],
         callbackURL:
-          "https://are-you-following-julien.onrender.com/oauth/callback/twitter.com",
+          "http://localhost:3000/oauth/callback/twitter.com",
         //proxy: trustProxy
       },
       function (token, tokenSecret, profile, cb) {
