@@ -1,12 +1,8 @@
 var passport = require("passport");
 var Strategy = require("passport-twitter");
+var baseUrl = require("../utils/baseUrl")
 
 module.exports = function () {
-  console.log(process.env)
-  let baseUrl = 'http://localhost:3000/'
-  if (process.env.NODE_ENV === 'production') {
-    baseUrl = "https://claim-ouvre-boite-membership.herokuapp.com/"
-  }
   /*
   var trustProxy = false;
   if (process.env.DYNO) {

@@ -3,7 +3,9 @@ var ethers = require('ethers')
 var router = express.Router();
 var JULIENS_ID = require('../constants').JULIENS_ID
 var lock = require("../utils/lock")
+var baseUrl = require("../utils/baseUrl")
 
+const domain = new URL(baseUrl).host
 /**
  * Main route
  */
@@ -11,7 +13,7 @@ router.get("/", async function (req, res, next) {
   if (!req.user) {
     res.render("index", { user: req.user });
   } else if (req.user.following && !req.user.wallet) {
-    res.render("following", { user: req.user });
+    res.render("following", { user: req.user, domain, baseUrl });
   } else if (req.user.following && req.user.wallet) {
     // Let's see if the user has a membership already?
     const expiration = await lock.keyExpirationFor(req.user.wallet)
