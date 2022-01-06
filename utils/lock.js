@@ -1,5 +1,9 @@
 const ethers = require('ethers')
-
+const KEY_GRANTER_PRIVATE_KEY = require('../constants').KEY_GRANTER_PRIVATE_KEY
+const RPC_PROVIDER = require('../constants').RPC_PROVIDER
+const BASE_DURATION = require('../constants').BASE_DURATION
+const BASE_DURATION_ENGLISH = require('../constants').BASE_DURATION_ENGLISH
+const LOCK_ADDRESS = require('../constants').LOCK_ADDRESS
 
 const abi = [
   {
@@ -27,49 +31,37 @@ const abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-
-          'function keyExpirationTimestampFor(address _owner) constant view returns (uint256 timestamp)',
-
+  'function keyExpirationTimestampFor(address _owner) constant view returns (uint256 timestamp)',
 ]
-const lockAddress = "0x19f11E9D43260411b29e538c489426e73e365B4a"
-const duration = 60 * 60 // 1 hour!
 
-const provider = new ethers.providers.JsonRpcProvider("https://rpc.xdaichain.com/")
-
+const provider = new ethers.providers.JsonRpcProvider(RPC_PROVIDER)
 
 
 /**
- * function to grant a key!
- * @param {*} recipient
- */
+* function to grant a key!
+* @param {*} recipient
+*/
 const grant = async (recipient) => {
-  const wallet = new ethers.Wallet(process.env["KEY_GRANTER_PRIVATE_KEY"])
+  const wallet = new ethers.Wallet(KEY_GRANTER_PRIVATE_KEY)
   const signer = wallet.connect(provider)
-  const lock = new ethers.Contract(
-    lockAddress,
-    abi,
-    signer
-  )
-  const expiration = Math.floor(
-    new Date().getTime() / 1000 + duration
-  )
-  // I keep the manager role... to prevent cancellations/transfers
-  const tx = await lock.grantKeys([recipient], [expiration], ["0xDD8e2548da5A992A63aE5520C6bC92c37a2Bcc44"])
-  const receipt = await tx.wait()
-  return receipt
+  const lock = new ethers.Contract(LOCK_ADDRESS, abi, signer)
+  const expiration = Math.floor(new Date().getTime() / 1000 + BASE_DURATION)
+  // We keep the key manager role
+  const tx = await lock.grantKeys([recipient], [expiration], [signer.address])
+  return tx
 }
 
 /**
- * Yields the expiration for a member!
- * @param {*} address
- * @returns
- */
+* Yields the expiration for a member!
+* @param {*} address
+* @returns
+*/
 const keyExpirationFor = async (address) => {
+  console.log(LOCK_ADDRESS)
   const lock = new ethers.Contract(
-    lockAddress,
+    LOCK_ADDRESS,
     abi,
-    provider
-  )
+    provider)
   const expiration = await lock.keyExpirationTimestampFor(address)
   return expiration.toNumber()
 }

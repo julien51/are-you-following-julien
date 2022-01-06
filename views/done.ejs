@@ -1,12 +1,15 @@
 <%- include('./partials/header.ejs'); %>
   <%- include('./partials/layout.ejs'); %>
 
-    <h1>Congratulations!</h1>
-    <p style="margin: 0 auto">You now have a trial membership for <a href="https://ouvre-boite.com/">Ouvre-Boite</a>!
+    <h1>🎊 Congratulations!</h1>
+    <p>As soon as this <a href="<%= EXPLORER_TX_BASE %><%= tx.hash %>">transaction</a> gets mined, you will have a
+      membership to <a href="<%= WEBSITE %>" target="_blank">
+        <%= WEBSITE %>
+      </a>!
     </p>
 
-    <small>This membership is only valid for 1 hour... When it expires, claim another one, or consider getting a year
-      long! <a href="https://www.ouvre-boite.com/membership" target="_blank">Learn
-        more</a>.</small>
+    <small>This membership is only valid for <%= BASE_DURATION_ENGLISH %> ... When it expires, you can claim another one
+        by coming back
+        here!</small>
 
     <%- include('./partials/footer.ejs'); %>

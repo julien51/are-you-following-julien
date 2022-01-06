@@ -2,7 +2,7 @@
   <%- include('./partials/layout.ejs'); %>
 
     <h1>You are elligible! 🎉</h1>
-    <p>It looks like you follow Julien. Please, connect your wallet so we can airdrop a membership.</p>
+    <p>It looks like you follow <%= NAME %>. Please, connect your wallet so we can airdrop a membership.</p>
     <a style="margin: 0 auto" role="button"
       href="https://app.unlock-protocol.com/checkout?client_id=<%= domain %>&redirect_uri=<%= baseUrl %>wallet-connected">Connect
       your wallet</a>

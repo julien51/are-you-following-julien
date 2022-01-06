@@ -1,6 +1,8 @@
 <%- include('./partials/header.ejs'); %>
   <%- include('./partials/layout.ejs'); %>
 
-    <p style="margin: 0 auto">You are not following Julien!</p>
+    <p style="margin: 0 auto">You are not following <a href="https://twitter.com/<%= NAME %>" target="_blank">
+        <%= NAME %>
+      </a> on Twitter... so you cannot claim a membership! Follow them and <a href="/">start again</a>.</p>
 
     <%- include('./partials/footer.ejs'); %>

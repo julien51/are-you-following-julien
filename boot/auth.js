@@ -1,6 +1,8 @@
 var passport = require("passport");
 var Strategy = require("passport-twitter");
 var baseUrl = require("../utils/baseUrl")
+var TWITTER_CONSUMER_KEY = require('../constants').TWITTER_CONSUMER_KEY
+var TWITTER_CONSUMER_SECRET = require('../constants').TWITTER_CONSUMER_SECRET
 
 module.exports = function () {
   /*
@@ -21,8 +23,8 @@ module.exports = function () {
   passport.use(
     new Strategy(
       {
-        consumerKey: process.env["TWITTER_CONSUMER_KEY"],
-        consumerSecret: process.env["TWITTER_CONSUMER_SECRET"],
+        consumerKey: TWITTER_CONSUMER_KEY,
+        consumerSecret: TWITTER_CONSUMER_SECRET,
         callbackURL:
           `${baseUrl}oauth/callback/twitter.com`,
         //proxy: trustProxy
