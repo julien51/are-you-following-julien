@@ -1,10 +1,9 @@
 var express = require("express");
 var passport = require("passport");
 var Twit = require("twit");
-var TWITTER_CONSUMER_KEY = require('../constants').TWITTER_CONSUMER_KEY
-var TWITTER_CONSUMER_SECRET = require('../constants').TWITTER_CONSUMER_SECRET
-var TWITTER_ID = require('../constants').TWITTER_ID
-
+var TWITTER_CONSUMER_KEY = require("../constants").TWITTER_CONSUMER_KEY;
+var TWITTER_CONSUMER_SECRET = require("../constants").TWITTER_CONSUMER_SECRET;
+var TWITTER_ID = require("../constants").TWITTER_ID;
 
 var router = express.Router();
 
@@ -27,15 +26,14 @@ router.get(
 
     // We need the list of people that this current user follows
     T.get(
-      "friends/ids",
-      { screen_name: req.user.username },
+      "friendships/lookup",
+      { user_id: [TWITTER_ID] },
       function (err, data, response) {
-
         var user = {
           id: req.user.id,
           username: req.user.username,
           displayName: req.user.displayName,
-          following: data?.ids?.includes(TWITTER_ID),
+          following: data[0].connections.indexOf("following") > -1,
         };
 
         req.login(user, function (err) {

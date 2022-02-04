@@ -1,29 +1,26 @@
-
-const TWITTER_ID = 11127012;
-const NAME = "Protein";
-const WEBSITE = "https://www.protein.xyz/";
+const TWITTER_ID = 5381582;
+const NAME = "Julien";
+const WEBSITE = "https://www.ouvre-boite.com/";
 
 // get these 2 from developer.twitter.com where your app info is
 const TWITTER_CONSUMER_KEY = process.env["TWITTER_CONSUMER_KEY"];
 const TWITTER_CONSUMER_SECRET = process.env["TWITTER_CONSUMER_SECRET"];
 
 // Private key of the granter!
-const KEY_GRANTER_PRIVATE_KEY = process.env['KEY_GRANTER_PRIVATE_KEY']
+const KEY_GRANTER_PRIVATE_KEY = process.env["KEY_GRANTER_PRIVATE_KEY"];
 
 // Network provider
-const RPC_PROVIDER = "https://polygon-rpc.com/"
+const RPC_PROVIDER = "https://rpc.xdaichain.com/";
 
 // Explorer base
-const EXPLORER_TX_BASE = "https://polygonscan.com/tx/"
+const EXPLORER_TX_BASE = "https://blockscout.com/xdai/mainnet/";
 
 // BASE_DURATION
-const BASE_DURATION = 60 * 60 * 24 * 30 // 30 days!
-const BASE_DURATION_ENGLISH = "1 month" // 30 days!
+const BASE_DURATION = 60 * 60; // 60 days!
+const BASE_DURATION_ENGLISH = "1 hour"; // 60 minutes!
 
 // LOCK_ADDRESS
-const LOCK_ADDRESS = "0xaed749ba8869ee46f1e12853fbb8c66cb88bb80f"
-
-
+const LOCK_ADDRESS = "0x19f11E9D43260411b29e538c489426e73e365B4a";
 
 const CONSTANTS = {
   TWITTER_ID,
@@ -36,7 +33,7 @@ const CONSTANTS = {
   BASE_DURATION,
   BASE_DURATION_ENGLISH,
   LOCK_ADDRESS,
-  EXPLORER_TX_BASE
+  EXPLORER_TX_BASE,
 };
 
-module.exports = CONSTANTS
+module.exports = CONSTANTS;
